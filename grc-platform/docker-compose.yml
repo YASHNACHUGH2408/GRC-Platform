@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container_name: grc_backend
+    ports:
+      - "5000:5000"
+    environment:
+      - DATABASE_URL=postgresql://grc_user:grc_pass@db:5432/grc_db
+    depends_on:
+      - db
+    volumes:
+      - .:/app
+    networks:
+      - grc_network
+
+  db:
+    image: postgres:15-alpine
+    container_name: grc_db
+    environment:
+      - POSTGRES_USER=grc_user
+      - POSTGRES_PASSWORD=grc_pass
+      - POSTGRES_DB=grc_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - grc_network
+
+volumes:
+  postgres_data:
+
+networks:
+  grc_network:
+    driver: bridge

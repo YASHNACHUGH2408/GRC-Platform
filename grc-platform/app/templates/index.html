@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CYBER // SECURE OPS</title>
+    <!-- Bold & Readable Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&family=JetBrains+Mono:wght@500;700&family=Rajdhani:wght@600;700;800&display=swap" rel="stylesheet">
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            /* HIGH CONTRAST PALETTE */
+            --bg-dark: #020617;      /* Deepest Black */
+            --bg-card: #0f172a;      /* Dark Slate */
+            --border-cyber: #1e293b;  /* Muted Blue */
+            
+            /* TEXT COLORS (Improved Readability) */
+            --text-heading: #ffffff;   /* PURE WHITE for Headings */
+            --text-body: #cbd5e1;     /* Bright Grey for reading */
+            --text-mono: #22d3ee;     /* Neon Cyan for data */
+            --text-muted: #64748b;    /* Dark Grey for labels */
+
+            /* ACCENTS */
+            --neon-green: #00ff41;
+            --neon-red: #ff003c;
+            --neon-cyan: #06b6d4;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-heading); /* Default White */
+            background-image: linear-gradient(rgba(6, 182, 212, 0.02) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(6, 182, 212, 0.02) 1px, transparent 1px);
+            background-size: 30px 30px;
+            min-height: 100vh;
+        }
+
+        /* --- BOLD & INTERACTIVE TYPOGRAPHY --- */
+        h1, h2, h3, h4, h5, .font-header {
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700; /* Heavy */
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-heading);
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.1); /* Subtle White Glow */
+        }
+
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 500; /* Readable Code Text */
+            color: var(--text-mono); /* Cyan Data */
+        }
+
+        p, span, td, li {
+            font-weight: 500; /* Semi-bold body text */
+            color: var(--text-body);
+        }
+
+        /* Interactive Text Hover Effect */
+        .interactive-text:hover {
+            color: var(--neon-cyan);
+            text-shadow: 0 0 15px rgba(34, 211, 238, 0.5);
+            transition: 0.3s ease;
+        }
+
+        /* --- TACTICAL COMPONENTS --- */
+        .navbar-tactical {
+            background: rgba(2, 6, 23, 0.98);
+            border-bottom: 1px solid var(--border-cyber);
+        }
+
+        /* Cards */
+        .tactical-card {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid var(--border-cyber);
+            border-radius: 4px; /* Sharp, not rounded */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+
+        .tactical-card:hover {
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.15);
+            transform: translateY(-2px);
+        }
+
+        /* KPI Values - Bold & Large */
+        .kpi-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 800;
+            font-size: 2.5rem;
+            color: var(--text-heading);
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+            transition: 0.3s;
+        }
+        
+        /* Hover Effect on KPI Number */
+        .tactical-card:hover .kpi-value {
+            color: var(--neon-cyan);
+            transform: scale(1.05);
+        }
+
+        /* Table - High Contrast */
+        .table-tactical {
+            --bs-table-bg: transparent;
+            --bs-table-color: var(--text-body);
+            --bs-table-border-color: var(--border-cyber);
+            font-size: 0.9rem;
+            font-weight: 500; /* Bold Data */
+        }
+        .table-tactical th {
+            background: rgba(0,0,0,0.4);
+            border-bottom: 2px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+        .table-tactical td {
+            border-bottom: 1px solid var(--border-cyber);
+            color: var(--text-heading); /* White text for table rows */
+        }
+
+        /* Badges */
+        .badge-cyber {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            text-transform: uppercase;
+            border: 1px solid;
+            padding: 5px 10px;
+        }
+        .bg-cyber-green { background: rgba(0, 255, 65, 0.15); color: var(--neon-green); border-color: var(--neon-green); }
+        .bg-cyber-red { background: rgba(255, 0, 60, 0.15); color: var(--neon-red); border-color: var(--neon-red); }
+        .bg-cyber-blue { background: rgba(6, 182, 212, 0.15); color: var(--neon-cyan); border-color: var(--neon-cyan); }
+
+        /* Live Dot */
+        .live-dot {
+            height: 8px; width: 8px; border-radius: 50%; background-color: var(--neon-red);
+            box-shadow: 0 0 10px var(--neon-red);
+            animation: blink 1s infinite;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-tactical sticky-top py-3">
+        <div class="container-fluid px-5">
+            <span class="navbar-brand d-flex align-items-center font-header fs-4">
+                <i class="fa-solid fa-user-secret me-2 text-white"></i>
+                CYBER <span style="color: var(--neon-cyan);">OPS</span>
+            </span>
+            <div class="d-flex align-items-center">
+                <div class="me-4 d-none d-lg-block text-end">
+                    <div class="font-mono" style="font-size: 0.75rem; color: var(--text-muted);">THREAT LEVEL</div>
+                    <div class="font-header" style="color: var(--neon-red); font-size: 1rem;">
+                        <span class="live-dot me-2"></span>ELEVATED
+                    </div>
+                </div>
+                <a href="/" class="btn btn-sm font-mono px-4" style="background: transparent; border: 1px solid var(--border-cyber); color: var(--text-heading);">
+                    LOGOUT
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid px-5 pt-4">
+        
+        <!-- Header -->
+        <div class="row mb-4">
+            <div class="col-12 border-bottom pb-3" style="border-color: var(--border-cyber);">
+                <h4 class="m-0 interactive-text">SECURE COMMAND DASHBOARD</h4>
+                <p class="mb-0 font-mono" style="font-size: 0.9rem; color: var(--text-mono);">
+                    ENCRYPTED CONNECTION // PORT 5000 // STATUS: ONLINE
+                </p>
+            </div>
+        </div>
+
+        <!-- KPI ROW -->
+        <div class="row g-4 mb-4">
+            <div class="col-md-3">
+                <div class="tactical-card p-4">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="font-mono" style="font-size: 0.8rem; color: var(--text-muted);">ACTIVE RISKS</span>
+                        <i class="fa-solid fa-bug" style="color: var(--neon-red);"></i>
+                    </div>
+                    <div class="kpi-value" id="risk-count">0</div>
+                    <div class="mt-2 font-mono" style="color: var(--neon-red); font-size: 0.8rem;">
+                        <i class="fa-solid fa-triangle-exclamation me-1"></i> CRITICAL VECTORS
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="tactical-card p-4">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="font-mono" style="font-size: 0.8rem; color: var(--text-muted);">INCIDENTS</span>
+                        <i class="fa-solid fa-triangle-exclamation" style="color: var(--neon-cyan);"></i>
+                    </div>
+                    <div class="kpi-value" id="incident-count">0</div>
+                    <div class="mt-2 font-mono" style="color: var(--text-body); font-size: 0.8rem;">
+                        RESPONSE ACTIVE
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="tactical-card p-4">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="font-mono" style="font-size: 0.8rem; color: var(--text-muted);">COMPLIANCE</span>
+                        <i class="fa-solid fa-shield-check" style="color: var(--neon-green);"></i>
+                    </div>
+                    <div class="kpi-value" id="compliance-iso">0%</div>
+                    <div class="mt-2">
+                        <div class="progress" style="height: 6px; background: #334155;">
+                            <div class="progress-bar" id="compliance-bar" style="width: 0%; background: var(--neon-green); box-shadow: 0 0 10px var(--neon-green);"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="tactical-card p-4">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="font-mono" style="font-size: 0.8rem; color: var(--text-muted);">ALERTS</span>
+                        <i class="fa-solid fa-bell" style="color: var(--text-heading);"></i>
+                    </div>
+                    <div class="kpi-value" id="alert-count">0</div>
+                    <div class="mt-2 font-mono" style="color: var(--text-body); font-size: 0.8rem;">
+                        POLICY VIOLATIONS
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CHARTS ROW -->
+        <div class="row g-4 mb-4">
+            <!-- Risk Chart -->
+            <div class="col-md-7">
+                <div class="tactical-card p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h5 class="m-0 interactive-text">THREAT MATRIX</h5>
+                        <span class="badge badge-cyber bg-cyber-blue">LIVE FEED</span>
+                    </div>
+                    <div style="height: 320px; position: relative;">
+                        <canvas id="riskChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <!-- Pie Chart -->
+            <div class="col-md-5">
+                <div class="tactical-card p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h5 class="m-0 interactive-text">CONSENT STATUS</h5>
+                        <i class="fa-solid fa-user-shield" style="color: var(--text-muted);"></i>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-center" style="height: 320px; position: relative;">
+                        <canvas id="dpdpChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TABLE ROW -->
+        <div class="row g-4 mb-4">
+            <div class="col-md-12">
+                <div class="tactical-card p-0">
+                    <div class="p-3 border-bottom d-flex justify-content-between align-items-center" style="background: rgba(0,0,0,0.3); border-color: var(--border-cyber);">
+                        <h5 class="m-0 interactive-text">DATA STREAMS</h5>
+                        <div class="input-group input-group-sm" style="width: 200px;">
+                            <span class="input-group-text bg-dark" style="border-color: var(--border-cyber); color: var(--text-muted);">>></span>
+                            <input type="text" class="form-control bg-dark text-light" style="border-color: var(--border-cyber);" placeholder="SEARCH...">
+                        </div>
+                    </div>
+                    <div style="max-height: 350px; overflow-y: auto;">
+                        <table class="table table-tactical table-hover mb-0">
+                            <thead class="sticky-top">
+                                <tr>
+                                    <th>TYPE</th>
+                                    <th>SOURCE</th>
+                                    <th>DESTINATION</th>
+                                    <th>METADATA</th>
+                                    <th>STATUS</th>
+                                </tr>
+                            </thead>
+                            <tbody id="combinedTable">
+                                <!-- JS Populated -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- EXPLANATION SECTION -->
+        <div class="row mb-5">
+            <div class="col-12">
+                <div class="tactical-card p-4">
+                    <h5 class="mb-3 font-header" style="color: var(--neon-cyan);">SYSTEM ANALYSIS</h5>
+                    <div class="row g-4">
+                        <div class="col-md-4">
+                            <h6 class="font-mono mb-2" style="color: var(--text-heading);">> THREAT MATRIX</h6>
+                            <p class="small mb-0" style="color: var(--text-body);">
+                                Visualizes risk distribution. <span style="color: var(--neon-red); font-weight:700;">RED (Critical)</span> requires immediate action. <span style="color: var(--neon-green); font-weight:700;">GREEN (Low)</span> is filtered noise.
+                            </p>
+                        </div>
+                        <div class="col-md-4">
+                            <h6 class="font-mono mb-2" style="color: var(--text-heading);">> CONSENT STATUS</h6>
+                            <p class="small mb-0" style="color: var(--text-body);">
+                                Pie chart showing <span style="color: var(--neon-green); font-weight:700;">GREEN: Active Consents (Safe)</span> vs <span style="color: var(--neon-red); font-weight:700;">RED: Revoked (Breach Risk)</span>.
+                            </p>
+                        </div>
+                        <div class="col-md-4">
+                            <h6 class="font-mono mb-2" style="color: var(--text-heading);">> DATA STREAMS</h6>
+                            <p class="small mb-0" style="color: var(--text-body);">
+                                Real-time logs of vendor traffic. Ensures encryption and access control compliance at all times.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="text-center py-4" style="border-top: 1px solid var(--border-cyber);">
+            <p class="mb-0 font-mono" style="font-size: 0.8rem; color: var(--text-muted);">SYSTEM v2.0 // SECURE</p>
+            <p class="mb-0 font-header fw-bold" style="font-size: 0.9rem; color: var(--text-heading);">DESIGNED BY YASHNA CHUGH</p>
+        </footer>
+
+    </div>
+
+    <!-- LOGIC -->
+    <script>
+        // Chart Config for Cyber Theme
+        Chart.defaults.color = '#cbd5e1'; // Bright Grey for Labels
+        Chart.defaults.font.family = "'JetBrains Mono', monospace";
+        Chart.defaults.font.weight = '600'; // Bold Labels
+        Chart.defaults.borderColor = '#1e293b';
+        
+        let riskChartInstance = null;
+        let dpdpChartInstance = null;
+
+        async function fetchAPI(url) {
+            const res = await fetch(url);
+            return await res.json();
+        }
+
+        async function updateDashboard() {
+            try {
+                // 1. KPI STATS
+                const incidents = await fetchAPI('/api/incidents/stats');
+                document.getElementById('incident-count').innerText = incidents.total_open;
+
+                const alerts = await fetchAPI('/api/governance/alerts');
+                document.getElementById('alert-count').innerText = alerts.length;
+
+                const compliance = await fetchAPI('/api/compliance/stats');
+                let isoPercent = 0;
+                if(compliance['ISO 27001']) isoPercent = compliance['ISO 27001'].percentage;
+                document.getElementById('compliance-iso').innerText = isoPercent + '%';
+                document.getElementById('compliance-bar').style.width = isoPercent + '%';
+
+                // 2. RISK CHART
+                const risks = await fetchAPI('/api/risks');
+                document.getElementById('risk-count').innerText = risks.length;
+                
+                let riskLevels = {'Low': 0, 'Medium': 0, 'High': 0, 'Critical': 0};
+                risks.forEach(r => { if(riskLevels[r.level] !== undefined) riskLevels[r.level]++; });
+
+                const riskCtx = document.getElementById('riskChart').getContext('2d');
+                const riskData = {
+                    labels: Object.keys(riskLevels),
+                    datasets: [{ 
+                        label: 'Count', 
+                        data: Object.values(riskLevels), 
+                        backgroundColor: [
+                            'rgba(0, 255, 65, 0.8)',  // Low - Green
+                            '#06b6d4',              // Medium - Cyan
+                            '#f59e0b',              // High - Amber
+                            'rgba(255, 0, 60, 0.9)' // Critical - Red
+                        ],
+                        borderWidth: 2,
+                        borderColor: '#0f172a'
+                    }]
+                };
+
+                if (!riskChartInstance) {
+                    riskChartInstance = new Chart(riskCtx, { 
+                        type: 'bar', 
+                        data: riskData, 
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: { legend: { display: false } },
+                            scales: { y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' } }, x: { grid: { display: false } } }
+                        } 
+                    });
+                } else {
+                    riskChartInstance.data = riskData;
+                    riskChartInstance.update();
+                }
+
+                // 3. PIE CHART (RED & GREEN ONLY)
+                const consents = await fetchAPI('/api/dpdp/consents');
+
+                let consentStatus = {'Active': 0, 'Revoked': 0};
+                consents.forEach(c => { if(consentStatus[c.status] !== undefined) consentStatus[c.status]++; });
+
+                const dpdpCtx = document.getElementById('dpdpChart').getContext('2d');
+                const dpdpData = {
+                    labels: ['COMPLIANT (ACTIVE)', 'RISK (REVOKED)'],
+                    datasets: [{ 
+                        label: 'Status',
+                        data: [consentStatus.Active, consentStatus.Revoked], 
+                        backgroundColor: [
+                            '#00ff41', // Matrix Green (Compliant)
+                            '#ff003c'  // Alert Red (Risk)
+                        ],
+                        borderWidth: 3,
+                        borderColor: '#020617', // Thick border for separation
+                        hoverOffset: 15
+                    }]
+                };
+
+                if (!dpdpChartInstance) {
+                    dpdpChartInstance = new Chart(dpdpCtx, { 
+                        type: 'pie', 
+                        data: dpdpData, 
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: { 
+                                legend: { position: 'right', labels: { color: '#ffffff', font: { size: 12 } } },
+                                tooltip: {
+                                    backgroundColor: '#0f172a',
+                                    titleColor: '#06b6d4',
+                                    bodyColor: '#ffffff',
+                                    borderColor: '#06b6d4',
+                                    borderWidth: 1
+                                }
+                            } 
+                        } 
+                    });
+                } else {
+                    dpdpChartInstance.data = dpdpData;
+                    dpdpChartInstance.update();
+                }
+
+                // 4. TABLE UPDATE
+                const vendors = await fetchAPI('/api/vendors');
+                const flows = await fetchAPI('/api/dataflow/flows');
+                const tableBody = document.getElementById('combinedTable');
+                tableBody.innerHTML = '';
+
+                flows.forEach(f => {
+                    let row = `
+                        <tr>
+                            <td><span class="badge badge-cyber bg-cyber-blue">FLOW</span></td>
+                            <td class="fw-bold">${f.source}</td>
+                            <td>${f.dest}</td>
+                            <td>${f.type}</td>
+                            <td><i class="fa-solid fa-check" style="color: var(--neon-green);"></i></td>
+                        </tr>`;
+                    tableBody.innerHTML += row;
+                });
+
+                vendors.forEach(v => {
+                    let color = v.risk_score > 70 ? 'color: var(--neon-red); font-weight:700;' : (v.risk_score > 40 ? 'color: #f59e0b; font-weight:700;' : 'color: var(--neon-green); font-weight:700;');
+                    let badge = v.risk_score > 70 ? 'bg-cyber-red' : (v.risk_score > 40 ? 'bg-cyber-blue' : 'bg-cyber-green');
+                    
+                    let row = `
+                        <tr>
+                            <td><span class="badge badge-cyber ${badge}">VENDOR</span></td>
+                            <td class="fw-bold">${v.name}</td>
+                            <td>${v.service}</td>
+                            <td class="${color}">SCORE: ${v.risk_score}</td>
+                            <td>${v.risk_score > 50 ? 'RISK' : 'OK'}</td>
+                        </tr>`;
+                    tableBody.innerHTML += row;
+                });
+
+            } catch (error) {
+                console.error("Dashboard Error:", error);
+            }
+        }
+
+        updateDashboard();
+        setInterval(updateDashboard, 3000);
+    </script>
+</body>
+</html>
